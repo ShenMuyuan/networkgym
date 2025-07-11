@@ -171,12 +171,13 @@ class Env(gym.Env):
         if self.first_episode:
             self.adapter.initial_rich_thread() # use rich to render network in terminal
         observation = self.adapter.get_observation(network_stats)
-        if (observation.shape != self.adapter.get_observation_space().shape):
-            sys.exit("[Error]: The shape of the observation and self.get_observation is not the same!")
+        # if (observation.shape != self.adapter.get_observation_space().shape):
+        #     sys.exit("[Error]: The shape of the observation and self.get_observation is not the same!")
         # print(observation.shape)
         self.adapter.wandb_log()
 
-        return observation.astype(np.float32), {"network_stats": network_stats}
+        # return observation.astype(np.float32), {"network_stats": network_stats}
+        return observation, {"network_stats": network_stats}
 
     def step(self, action):
         """Run one timestep of the environment's dynamics using the agent actions.
@@ -217,7 +218,7 @@ class Env(gym.Env):
         else:
             # TODO: we need to have the same action format... e.g., [0, 1]
             if (action.shape != self.adapter.get_action_space().shape):
-                sys.exit("[Error]: The shape of the observation and self.get_observation is not the same!")
+                sys.exit("[Error]: The shape of the action space and the action is not the same!")
             self.last_action = action
             policy = self.adapter.get_policy(action)
             self.northbound_interface_client.send(policy) #send network policy to network gym server
@@ -229,8 +230,8 @@ class Env(gym.Env):
             sys.exit("[Error]: ↑ Scroll up to see the error msgs ↑")
         
         observation = self.adapter.get_observation(network_stats)
-        if (observation.shape != self.adapter.get_observation_space().shape):
-            sys.exit("[Error]: The shape of the observation and self.get_observation is not the same!")
+        # if (observation.shape != self.adapter.get_observation_space().shape):
+        #     sys.exit("[Error]: The shape of the observation space and self.get_observation is not the same!")
         # print(observation)
 
         #Get reward
@@ -256,4 +257,5 @@ class Env(gym.Env):
         #4.) return observation, reward, done, info
         #if terminated or truncated:
         #    print("Episode End ---> terminated:" + str(terminated) + " truncated:" + str(truncated))
-        return observation.astype(np.float32), reward, terminated, truncated, {"network_stats": network_stats}
+        # return observation.astype(np.float32), reward, terminated, truncated, {"network_stats": network_stats}
+        return observation, reward, terminated, truncated, {"network_stats": network_stats}
