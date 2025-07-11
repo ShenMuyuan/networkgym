@@ -1,0 +1,16 @@
+{
+  "rl_config":{
+    "agent": "",
+    "reward_type" : "utility"
+  },
+
+  "env_config":{
+    "type": "env-start",
+    "subscribed_network_stats":["calculator::addend::a", "calculator::addend::b"],
+    "steps_per_episode": 10,
+    "episodes_per_session": 100,
+    "measurement_start_time_ms": 1000,
+    "measurement_interval_ms": 1,
+    "max_wait_time_for_action_ms": 100000
+  }
+}

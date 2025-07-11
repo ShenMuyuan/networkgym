@@ -1,0 +1,16 @@
+{
+  "rl_config":{
+    "agent": "",
+    "reward_type" : "utility"
+  },
+
+  "env_config":{
+    "type": "env-start",
+    "subscribed_network_stats":["TsRateControl::meas::succ", "TsRateControl::meas::fail"],
+    "steps_per_episode": 100,
+    "episodes_per_session": 1,
+    "measurement_start_time_ms": 1000,
+    "measurement_interval_ms": 1000,
+    "max_wait_time_for_action_ms": 100000
+  }
+}
